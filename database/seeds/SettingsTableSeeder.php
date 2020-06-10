@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Setting;
 
 class SettingsTableSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
+
+
         DB::table('settings')->insert([
             'key' => 'mailchimp_list_id',
             'value' => 'xxx'
