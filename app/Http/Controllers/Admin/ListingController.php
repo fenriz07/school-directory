@@ -13,6 +13,8 @@ use Image;
 use Hash;
 use Mail;
 use Validator;
+use App\Models\Level;
+
 
 class ListingController extends Controller
 {
@@ -36,7 +38,10 @@ class ListingController extends Controller
         $listing = new Listing();
         $users = User::all();
         $main_categories = Category::where('parent_id', null)->get();
-        return view('backend/listing/createedit', ['main_categories' => $main_categories, 'listing' => $listing, 'users' => $users]);
+
+        $levels = Level::all();
+
+        return view('backend/listing/createedit', ['levels' => $levels,'main_categories' => $main_categories, 'listing' => $listing, 'users' => $users]);
     }
 
     public function getEdit($listingid)
@@ -57,7 +62,10 @@ class ListingController extends Controller
         $main_categories = Category::where('parent_id', null)->get();
         $selected_categories = $listing->categories()->select('categories.id AS id')->lists('id')->all();
 
-        return view('backend/listing/createedit', ['listing' => $listing, 'main_categories' => $main_categories, 'selected_categories' => $selected_categories, 'openingtimes' => $openingtimes, 'users' => $users]);
+        $levels = Level::all();
+        $selected_levels = $listing->levels()->select('levels.id AS id')->lists('id')->all();
+
+        return view('backend/listing/createedit', ['selected_levels' => $selected_levels,'levels' => $levels,'listing' => $listing, 'main_categories' => $main_categories, 'selected_categories' => $selected_categories, 'openingtimes' => $openingtimes, 'users' => $users]);
     }
 
     public function postCreateEdit(Request $request)
@@ -124,6 +132,13 @@ class ListingController extends Controller
             if (is_array($request->categories)) {
                 foreach ($request->categories as $cid) {
                     $listing->categories()->attach($cid);
+                }
+            }
+
+            $listing->levels()->detach();
+            if (is_array($request->levels)) {
+                foreach ($request->levels as $cid) {
+                    $listing->levels()->attach($cid);
                 }
             }
 

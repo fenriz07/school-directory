@@ -12,6 +12,7 @@ use File;
 use Image;
 use Validator;
 use Entrust;
+use App\Models\Level;
 
 class ListingController extends Controller
 {
@@ -20,7 +21,9 @@ class ListingController extends Controller
     {
         $listing = new Listing();
         $main_categories = Category::where('parent_id', null)->get();
-        return view('frontend/listing/createedit', ['main_categories' => $main_categories, 'listing' => $listing]);
+        $levels = Level::all();
+    
+        return view('frontend/listing/createedit', ['main_categories' => $main_categories, 'listing' => $listing,'levels' => $levels ]);
     }
 
     public function getEdit($listingid)
@@ -52,7 +55,11 @@ class ListingController extends Controller
 
         $main_categories = Category::where('parent_id', null)->get();
         $selected_categories = $listing->categories()->select('categories.id AS id')->lists('id')->all();
-        return view('frontend/listing/createedit', ['listing' => $listing, 'main_categories' => $main_categories, 'selected_categories' => $selected_categories, 'openingtimes' => $openingtimes]);
+        $levels = Level::all();
+        $selected_levels = $listing->levels()->select('levels.id AS id')->lists('id')->all();
+
+
+        return view('frontend/listing/createedit', ['selected_levels' => $selected_levels,'levels' => $levels, 'listing' => $listing, 'main_categories' => $main_categories, 'selected_categories' => $selected_categories, 'openingtimes' => $openingtimes]);
     }
 
     public function postCreateEdit(Request $request)
@@ -127,6 +134,13 @@ class ListingController extends Controller
             if (is_array($request->categories)) {
                 foreach ($request->categories as $cid) {
                     $listing->categories()->attach($cid);
+                }
+            }
+
+            $listing->levels()->detach();
+            if (is_array($request->levels)) {
+                foreach ($request->levels as $cid) {
+                    $listing->levels()->attach($cid);
                 }
             }
 

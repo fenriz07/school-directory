@@ -51,16 +51,16 @@
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a class="{{ Request::is('/') ? 'active' : ''}}" href="{{ URL::to('') }}">Search</a></li>
-                  <li><a class="{{ Request::is('submit-listing') ? 'active' : ''}}" href="{{ URL::to('submit-listing') }}">Submit Listing</a></li>
-                  <li><a class="{{ Request::is('news') ? 'active' : ''}}" href="{{ URL::to('news') }}">News</a></li>
+                  <li><a class="{{ Request::is('/') ? 'active' : ''}}" href="{{ URL::to('') }}">Encuentra Colegio</a></li>
+                  <li><a class="{{ Request::is('submit-listing') ? 'active' : ''}}" href="{{ URL::to('submit-listing') }}">Sube un colegio</a></li>
+              
                   @if (Entrust::hasRole('admin'))
                     <li><a href="{{ URL::to('admin') }}">Admin Panel</a></li>
                   @endif
 
                   @if (!Auth::check())
-                  <li><a class="{{ Request::is('register') ? 'active' : ''}}" href="{{ URL::to('register') }}">Register</a></li>
-                  <li><a class="{{ Request::is('login') ? 'active' : ''}}" href="{{ URL::to('login') }}">Login</a></li>
+                  <li><a class="{{ Request::is('register') ? 'active' : ''}}" href="{{ URL::to('register') }}">Registrate</a></li>
+                  <li><a class="{{ Request::is('login') ? 'active' : ''}}" href="{{ URL::to('login') }}">Iniciar sesión</a></li>
                   @else
 
                   <li class="dropdown">

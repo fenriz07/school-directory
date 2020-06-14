@@ -11,7 +11,7 @@
 
 
 	<ol class="breadcrumb">
-	    <li><a href="{{ URL::to('') }}">Search</a></li>
+	    <li><a href="{{ URL::to('') }}">Buscando Colegio</a></li>
 	    <li class="active">{{ $listing->title }}</li>
 	</ol>
 
@@ -27,7 +27,7 @@
 					<div class="pull-right">
 
 						@if($listing->verified == true)
-						<div class="verified">Verified Owner <img class="verified" src="{{URL::to('img/verified.png')}}" title="Verified Owner" /></div>
+							<div class="verified">Colegio Verificado <img class="verified" src="{{URL::to('img/verified.png')}}" title="Colegio Verificado" /></div>
 						@endif
 
 
@@ -40,7 +40,7 @@
 					<p class="description">{!! nl2br($listing->description) !!}</p>
 
 					@if($listing->user_id == NULL)
-					<a href="{{url('listing/claim/'.$listing->id)}}"><div class="pull-right btn btn-xs btn-default">Claim this listing</div></a>
+					<a href="{{url('listing/claim/'.$listing->id)}}"><div class="pull-right btn btn-xs btn-default">Reclamar propiedad del colegio</div></a>
 					@endif
 
 					<div class="clearfix"></div>
@@ -54,7 +54,7 @@
 
 				@if($listing->service_area)
 				<div class="widget">
-					<h2>Service area</h2>
+					<h2>¿Qué hace diferente o especial al Colegio?</h2>
 					<p>{{$listing->service_area}}</p>
 
 				</div>
@@ -74,19 +74,19 @@
 
 
 				<div class="widget">
-					<h2>Contact</h2>
+					<h2>Datos de contacto</h2>
 
 					<table class="table-contact">
 
 						@if($listing->phone)
 						<tr>
-							<td><i class="fa fa-phone fa-fw"></i></td><td><span class="phone-content">{{ substr($listing->phone, 0, -5)."*****"}}</span> <span class="show-phone-link show-link" onclick="showPhone()">Show Number</span></td>
+							<td><i class="fa fa-phone fa-fw"></i></td><td><span class="phone-content">{{ substr($listing->phone, 0, -5)."*****"}}</span> <span class="show-phone-link show-link" onclick="showPhone()"> Ver</span></td>
 						</tr>
 						@endif
 
 						@if($listing->phone_afterhours)
 						<tr>
-							<td><i class="fa fa-phone fa-fw"></i></td><td><span class="phone-after-content">{{ substr($listing->phone_afterhours, 0, -5)."*****"}}</span> <span class="small">(after hours)</span> <span class="show-phone-after-link show-link" onclick="showPhoneAfter()">Show Number</span></td>
+							<td><i class="fa fa-phone fa-fw"></i></td><td><span class="phone-after-content">{{ substr($listing->phone_afterhours, 0, -5)."*****"}}</span> <span class="small">(Fuera de horario)</span> <span class="show-phone-after-link show-link" onclick="showPhoneAfter()">Ver</span></td>
 						</tr>
 						@endif
 
@@ -98,7 +98,7 @@
 
 						@if($listing->email)
 						<tr>
-							<td><i class="fa fa-envelope-o fa-fw"></i></td><td><span class="email-content">{{ substr($listing->email, 0, -7)."*******"}}</span> <span class="show-email-link show-link" onclick="showEmail()">Show Email</span></td>
+							<td><i class="fa fa-envelope-o fa-fw"></i></td><td><span class="email-content">{{ substr($listing->email, 0, -7)."*******"}}</span> <span class="show-email-link show-link" onclick="showEmail()">Ver</span></td>
 						</tr>
 						@endif
 
@@ -109,6 +109,17 @@
 						</tr>
 						@endif
 
+						@if( count($listing->levels) > 0 )
+						<tr>
+							<td>Niveles:</td>
+							<td>
+							@foreach ($listing->levels as $level)
+							<span class="badge">{{$level->name}}</span>
+							@endforeach
+							</td>
+						</tr>
+						@endif
+
 					</table>
 
 					<div class="social-icons pull-right">
@@ -116,7 +127,7 @@
 						<a href="{{ $listing->facebook }}" rel="nofollow"><img src="{{URL::to('img/icons/32-facebook.png')}}" alt="facebook"></a>
 						@endif
 						@if($listing->twitter)
-						<a href="{{ $listing->twitter }}" rel="nofollow"><img src="{{URL::to('img/icons/32-twitter.png')}}" alt="twitter"></a>
+						<a href="{{ $listing->twitter }}" rel="nofollow"><img src="{{URL::to('img/icons/32-instagram.png')}}" alt="twitter"></a>
 						@endif
 					</div>
 
@@ -124,63 +135,6 @@
 
 				</div>	
 		
-				<div class="widget">
-					<h2>Opening Times</h2>
-
-					<table class="table table-striped table-condensed openingtimes">
-
-						<tr><th></th><th>From</th><th>To</th></tr>
-
-
-						@if($openingtimes["Monday"])
-						<tr><td>Monday</td><td>{{ date('h:i A', strtotime($openingtimes["Monday"]->start)) }}</td><td>{{ date('h:i A', strtotime($openingtimes["Monday"]->end)) }}</td></tr>
-						@else
-						<tr><td>Monday</td><td colspan="2" class="closed">-</td></tr>
-						@endif
-
-						@if($openingtimes["Tuesday"])
-						<tr><td>Tuesday</td><td>{{ date('h:i A', strtotime($openingtimes["Tuesday"]->start)) }}</td><td>{{ date('h:i A', strtotime($openingtimes["Tuesday"]->end)) }}</td></tr>
-						@else
-						<tr><td>Tuesday</td><td colspan="2" class="closed">-</td></tr>
-						@endif
-
-						@if($openingtimes["Wednesday"])
-						<tr><td>Wednesday</td><td>{{ date('h:i A', strtotime($openingtimes["Wednesday"]->start)) }}</td><td>{{ date('h:i A', strtotime($openingtimes["Wednesday"]->end)) }}</td></tr>
-						@else
-						<tr><td>Wednesday</td><td colspan="2" class="closed">-</td></tr>
-						@endif
-
-						@if($openingtimes["Thursday"])
-						<tr><td>Thursday</td><td>{{ date('h:i A', strtotime($openingtimes["Thursday"]->start)) }}</td><td>{{ date('h:i A', strtotime($openingtimes["Thursday"]->end)) }}</td></tr>
-						@else
-						<tr><td>Thursday</td><td colspan="2" class="closed">-</td></tr>
-						@endif
-
-						@if($openingtimes["Friday"])
-						<tr><td>Friday</td><td>{{ date('h:i A', strtotime($openingtimes["Friday"]->start)) }}</td><td>{{ date('h:i A', strtotime($openingtimes["Friday"]->end)) }}</td></tr>
-						@else
-						<tr><td>Friday</td><td colspan="2" class="closed">-</td></tr>
-						@endif
-
-						@if($openingtimes["Saturday"])
-						<tr><td>Saturday</td><td>{{ date('h:i A', strtotime($openingtimes["Saturday"]->start)) }}</td><td>{{ date('h:i A', strtotime($openingtimes["Saturday"]->end)) }}</td></tr>
-						@else
-						<tr><td>Saturday</td><td colspan="2" class="closed">-</td></tr>
-						@endif
-
-						@if($openingtimes["Sunday"])
-						<tr><td>Sunday</td><td>{{ date('h:i A', strtotime($openingtimes["Sunday"]->start)) }}</td><td>{{ date('h:i A', strtotime($openingtimes["Sunday"]->end)) }}</td></tr>
-						@else
-						<tr><td>Sunday</td><td colspan="2" class="closed">-</td></tr>
-						@endif
-
-					</table>
-
-					<p class="currentstate"></p>
-
-				</div>		
-
-
 
 			</div>
 

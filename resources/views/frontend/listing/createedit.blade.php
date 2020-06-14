@@ -1,6 +1,6 @@
 @extends('frontend/layouts/master')
 
-@section('title', ($listing->id)?'Edit Listing':'Submit Listing')
+@section('title', ($listing->id)?'Edit Listing':'Sube un colegio')
 
 @section('styles')
 
@@ -13,7 +13,7 @@
 
 <div class="container">
 
-<h1 class="page-headline">{{ ($listing->id)?'Edit Listing':'Submit Listing' }}</h1>
+<h1 class="page-headline">{{ ($listing->id)?'Edición del colegio':'Sugiere un Colegio' }}</h1>
 
 <div class="bg-white" style="">
 
@@ -43,7 +43,7 @@
 		    <div class="row">
 
 		    	<div class="col-sm-3">
-		        	<label for="title" class="control-label">Organisation Name</label>
+		        	<label for="title" class="control-label">Nombre del colegio</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
 		            <input type="text" class="form-control" id="title" name="title" value="{{ (Request::old('title')) ? Request::old('title') : $listing->title }}">
@@ -53,7 +53,7 @@
 			<div class="row data-block">
 
 		    	<div class="col-sm-3">
-		        	<label for="categories" class="control-label">Categories</label>
+		        	<label for="categories" class="control-label">Servicios con los que cuenta el colegio</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
 
@@ -74,15 +74,39 @@
 		        </div>
 
 
+			</div>
+			
+			<div class="row data-block">
+
+		    	<div class="col-sm-3">
+		        	<label for="categories" class="control-label">Niveles</label>
+		        </div>
+		        <div class="col-sm-9 form-group">
+
+			    <select class="form-control selectpicker" name="levels[]" multiple>
+					@foreach($levels as $level)
+					
+						@if( (isset($selected_levels) && in_array($level->id, $selected_levels)) )
+							<option value="{{$level->id}}" selected>{{$level->name}}</option>
+						@else
+							<option value="{{$level->id}}">{{$level->name}}</option>
+						@endif
+					
+			        @endforeach
+			    </select>
+
+		        </div>
+
+
 		    </div>
 
 		    <div class="row">
 
 		    	<div class="col-sm-3">
-		        	<label for="description" class="control-label">Description</label>
+		        	<label for="description" class="control-label">Describe el colegio</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
-		        	<textarea id="description" name="description" class="form-control" rows="10" placeholder="Write a description of your organisation.">{{ (Request::old('description')) ? Request::old('description') : $listing->description }}</textarea>
+		        	<textarea id="description" name="description" class="form-control" rows="10" placeholder="Describe el colegio">{{ (Request::old('description')) ? Request::old('description') : $listing->description }}</textarea>
 		        </div>
 
 		    </div>
@@ -104,7 +128,7 @@
 		    <div class="row data-block">
 
 		    	<div class="col-sm-3">
-		        	<label for="location" class="control-label">Address</label>
+		        	<label for="location" class="control-label">Dirección</label>
 		        </div>
                 <div class="col-md-9">
 
@@ -145,10 +169,10 @@
 		    <div class="row data-block">
 
 		    	<div class="col-sm-3">
-		        	<label for="description" class="control-label">Service area</label>
+		        	<label for="description" class="control-label">¿Qué hace diferente o especial al Colegio?</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
-		        	<textarea id="service_area" name="service_area" class="form-control" rows="10" placeholder="Suburbs, areas or districts of your service.">{{ (Request::old('service_area')) ? Request::old('service_area') : $listing->service_area }}</textarea>
+		        	<textarea id="service_area" name="service_area" class="form-control" rows="10" placeholder="¿Qué hace diferente o especial al Colegio?">{{ (Request::old('service_area')) ? Request::old('service_area') : $listing->service_area }}</textarea>
 		        </div>
 
 		    </div>
@@ -158,560 +182,57 @@
 		    <div class="row data-block">
 
 		    	<div class="col-sm-3">
-		        	<label for="phone" class="control-label">Phone</label>
+		        	<label for="phone" class="control-label">Teléfono</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
-		        	<input type="text" class="form-control" id="phone" name="phone" value="{{ (Request::old('phone')) ? Request::old('phone') : $listing->phone }}" placeholder="e.g. 012345678">
+		        	<input type="text" class="form-control" id="phone" name="phone" value="{{ (Request::old('phone')) ? Request::old('phone') : $listing->phone }}" placeholder="Ejemplo: 012345678">
 		        </div>
 
 		    	<div class="col-sm-3">
-		        	<label for="phoneafterhours" class="control-label">Phone (After Hours)</label>
+		        	<label for="phoneafterhours" class="control-label">Whatsapp</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
-		        	<input type="text" class="form-control" id="phone_afterhours" name="phone_afterhours" value="{{ (Request::old('phone_afterhours')) ? Request::old('phone_afterhours') : $listing->phone_afterhours }}" placeholder="e.g. 012345678">
+		        	<input type="text" class="form-control" id="phone_afterhours" name="phone_afterhours" value="{{ (Request::old('phone_afterhours')) ? Request::old('phone_afterhours') : $listing->phone_afterhours }}" placeholder="Ejemplo: 012345678">
 		        </div>
 
 		    	<div class="col-sm-3">
-		        	<label for="website" class="control-label">Website</label>
+		        	<label for="website" class="control-label">Sitio Web</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
-		        	<input type="text" class="form-control" id="website" name="website" value="{{ (Request::old('website')) ? Request::old('website') : $listing->website }}" placeholder="e.g. http://www.example.com">
+		        	<input type="text" class="form-control" id="website" name="website" value="{{ (Request::old('website')) ? Request::old('website') : $listing->website }}" placeholder="Ejemplo: http://www.ejemplo.com">
 		        </div>
 
 		    	<div class="col-sm-3">
-		        	<label for="email" class="control-label">Email</label>
+		        	<label for="email" class="control-label">Correo Electrónico</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
-		        	<input type="text" class="form-control" id="email" name="email" value="{{ (Request::old('email')) ? Request::old('email') : $listing->email }}" placeholder="e.g. info@example.com">
+		        	<input type="text" class="form-control" id="email" name="email" value="{{ (Request::old('email')) ? Request::old('email') : $listing->email }}" placeholder="Ejemplo: info@gmail.com">
 		        </div>
 
 		    </div>
 
 		    <div class="row data-block">
 		    	<div class="col-sm-3">
-		        	<label for="twitter" class="control-label">Twitter</label>
+		        	<label for="twitter" class="control-label">Instagram</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
-		        	<input type="text" class="form-control" id="twitter" name="twitter" value="{{ (Request::old('twitter')) ? Request::old('twitter') : $listing->twitter }}" placeholder="e.g. http://www.twitter.com/example">
+		        	<input type="text" class="form-control" id="twitter" name="twitter" value="{{ (Request::old('twitter')) ? Request::old('twitter') : $listing->twitter }}" placeholder="@ejemplo">
 		        </div>
 
 		    	<div class="col-sm-3">
 		        	<label for="facebook" class="control-label">Facebook</label>
 		        </div>
 		        <div class="col-sm-9 form-group">
-		        	<input type="text" class="form-control" id="facebook" name="facebook" value="{{ (Request::old('facebook')) ? Request::old('facebook') : $listing->facebook }}" placeholder="e.g. http://www.facebook.com/example">
+		        	<input type="text" class="form-control" id="facebook" name="facebook" value="{{ (Request::old('facebook')) ? Request::old('facebook') : $listing->facebook }}" placeholder="http://www.facebook.com/tu-colegio-ideal">
 		        </div>
 
 		    </div>
-
-		    <div class="row data-block">
-		    	<div class="col-sm-3">
-		        	<label for="location" class="control-label">Opening Times</label>
-
-		        </div>
-		        <div class="col-sm-9">
-
-
-		        	<div class="clearfix"></div>
-
-		        	<div class="row form-group">
-		        		<div class="col-xs-12 col-sm-2 col-md-2" style="padding-top:7px;">Monday</div>
-				    	<div class="col-xs-12 col-sm-10 col-md-10">
-
-				    		<div class="row">
-
-				    			<div class="col-sm-5 col-sm-offset-1">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="monday_start" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('monday_start') && Request::old('monday_start') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Monday"] && $openingtimes["Monday"]->start == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>   
-
-							    </div>
-
-						        <div class="col-sm-1" style="padding-top:7px;">to</div>  
-
-						        <div class="col-sm-5">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="monday_end" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('monday_end') && Request::old('monday_end') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Monday"] && $openingtimes["Monday"]->end == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>    
-
-						        </div>  
-
-					    	</div>
-				    	</div>
-			    	</div>
-
-		        	<div class="row form-group">
-		        		<div class="col-xs-12 col-sm-2 col-md-2" style="padding-top:7px;">Tuesday</div>
-				    	<div class="col-xs-12 col-sm-10 col-md-10">
-				    		<div class="row">
-
-				    			<div class="col-sm-5 col-sm-offset-1">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="tuesday_start" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('tuesday_start') && Request::old('tuesday_start') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Tuesday"] && $openingtimes["Tuesday"]->start == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>   
-
-							    </div>
-
-						        <div class="col-sm-1" style="padding-top:7px;">to</div>  
-
-						        <div class="col-sm-5">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="tuesday_end" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('tuesday_end') && Request::old('tuesday_end') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Tuesday"] && $openingtimes["Tuesday"]->end == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>    
-
-						        </div>  
-
-					    	</div>
-				    	</div>
-			    	</div>
-
-		        	<div class="row form-group">
-		        		<div class="col-xs-12 col-sm-2 col-md-2" style="padding-top:7px;">Wednesday</div>
-				    	<div class="col-xs-12 col-sm-10 col-md-10">
-
-				    		<div class="row">
-
-				    			<div class="col-sm-5 col-sm-offset-1">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="wednesday_start" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('wednesday_start') && Request::old('wednesday_start') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Wednesday"] && $openingtimes["Wednesday"]->start == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>   
-
-							    </div>
-
-						        <div class="col-sm-1" style="padding-top:7px;">to</div>  
-
-						        <div class="col-sm-5">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="wednesday_end" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('wednesday_end') && Request::old('wednesday_end') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Wednesday"] && $openingtimes["Wednesday"]->end == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>    
-
-						        </div>  
-
-					    	</div>
-				    	</div>
-			    	</div>
-
-		        	<div class="row form-group">
-		        		<div class="col-xs-12 col-sm-2 col-md-2" style="padding-top:7px;">Thursday</div>
-				    	<div class="col-xs-12 col-sm-10 col-md-10">
-				    		<div class="row">
-
-				    			<div class="col-sm-5 col-sm-offset-1">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="thursday_start" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('thursday_start') && Request::old('thursday_start') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Thursday"] && $openingtimes["Thursday"]->start == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>   
-
-							    </div>
-
-						        <div class="col-sm-1" style="padding-top:7px;">to</div>  
-
-						        <div class="col-sm-5">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="thursday_end" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('thursday_end') && Request::old('thursday_end') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Thursday"] && $openingtimes["Thursday"]->end == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>    
-
-						        </div>  
-
-					    	</div>
-				    	</div>
-			    	</div>
-
-		        	<div class="row form-group">
-		        		<div class="col-xs-12 col-sm-2 col-md-2" style="padding-top:7px;">Friday</div>
-				    	<div class="col-xs-12 col-sm-10 col-md-10">
-
-				    		<div class="row">
-
-				    			<div class="col-sm-5 col-sm-offset-1">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="friday_start" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('friday_start') && Request::old('friday_start') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Friday"] && $openingtimes["Friday"]->start == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>   
-
-							    </div>
-
-						        <div class="col-sm-1" style="padding-top:7px;">to</div>  
-
-						        <div class="col-sm-5">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="friday_end" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('friday_end') && Request::old('friday_end') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Friday"] && $openingtimes["Friday"]->end == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>    
-
-						        </div>  
-
-					    	</div>
-				    	</div>
-			    	</div>
-
-		        	<div class="row form-group">
-		        		<div class="col-xs-12 col-sm-2 col-md-2" style="padding-top:7px;">Saturday</div>
-				    	<div class="col-xs-12 col-sm-10 col-md-10">
-
-				    		<div class="row">
-
-				    			<div class="col-sm-5 col-sm-offset-1">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="saturday_start" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('saturday_start') && Request::old('saturday_start') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Saturday"] && $openingtimes["Saturday"]->start == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>   
-
-							    </div>
-
-						        <div class="col-sm-1" style="padding-top:7px;">to</div>  
-
-						        <div class="col-sm-5">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="saturday_end" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('saturday_end') && Request::old('saturday_end') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Saturday"] && $openingtimes["Saturday"]->end == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>    
-
-						        </div>  
-
-					    	</div>
-				    	</div>
-			    	</div>
-
-		        	<div class="row form-group">
-		        		<div class="col-xs-12 col-sm-2 col-md-2" style="padding-top:7px;">Sunday</div>
-				    	<div class="col-xs-12 col-sm-10 col-md-10">
-
-				    		<div class="row">
-
-				    			<div class="col-sm-5 col-sm-offset-1">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="sunday_start" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('sunday_start') && Request::old('sunday_start') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Sunday"] && $openingtimes["Sunday"]->start == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>   
-
-							    </div>
-
-						        <div class="col-sm-1" style="padding-top:7px;">to</div>  
-
-						        <div class="col-sm-5">
-
-							        <div class="input-group">
-							        	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-							    		<select name="sunday_end" class="form-control">
-							    			<option value="">closed</option>
-											<?php
-											    $time = strtotime('00:00:00'); // start
-											    for ($i = 0; $i < 48; $i++)
-											    {
-											    	$selected = "";
-											        $time_str_mysql = date('H:i:s', $time);
-											        $time_str_frontend = date('h:i A', $time);
-
-											        if(Request::old('sunday_end') && Request::old('sunday_end') == $time_str_mysql){
-											        	$selected = "selected";
-											        }elseif(isset($openingtimes) && $openingtimes["Sunday"] && $openingtimes["Sunday"]->end == $time_str_mysql){
-											        	$selected = "selected";
-											        }
-
-											        echo "<option value=\"$time_str_mysql\" $selected>$time_str_frontend</option>";
-											        $time = strtotime('+30mins', strtotime($time_str_mysql)); // add 30 mins
-											    }
-											?>
-							    		</select>
-							        </div>    
-
-						        </div>  
-
-					    	</div>
-				    	</div>
-			    	</div>
-
-		    	</div>
-
-		    </div>
-
 
 
 		    <div class="data-block">
 		        <div class="pull-right">
 
-		          	<button type="submit" class="btn btn-lg btn-success">{!! ($listing->id)?'<i class="fa fa-check"></i> Save':'Submit' !!}</button>
+		          	<button type="submit" class="btn btn-lg btn-success">{!! ($listing->id)?'<i class="fa fa-check"></i> Guardar':'Enviar' !!}</button>
 
 			    </div>
 			    <div class="clearfix"></div>

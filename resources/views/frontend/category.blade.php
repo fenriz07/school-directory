@@ -20,7 +20,7 @@
 				<div class="listings">
 
 					@if(count($listings) == 0)
-						<p>This category has no listings</p>
+						<p>Sin resultados</p>
 					@endif
 
 					@foreach($listings as $listing)
@@ -35,7 +35,7 @@
 							<div class="col-sm-9">
 								<div class="pull-right">
 									@if($listing->verified == true)
-									<div class="verified"><img class="verified" alt="verified" src="{{URL::to('img/verified.png')}}" title="Verified Owner"/></div>
+									<div class="verified"><img class="verified" alt="verified" src="{{URL::to('img/verified.png')}}" title="Verificado"/></div>
 									@endif
 								</div>
 
@@ -51,7 +51,16 @@
 
 								<p class="excerpt">{{ str_limit($listing->description, 190) }}</p>
 
-								<a href="{{ URL::to('listing/'.$listing->id.'/'.$listing->slug) }}" title="{{ $listing->title }}"><button class="btn btn-sm btn-blue pull-right">View Listing <i class="fa fa-chevron-right fa-fw"></i></button></a>
+								
+
+								@if( count($listing->levels) > 0 )
+									<p style="margin-top:20px;">Niveles</p>
+										@foreach ($listing->levels as $level)
+											<span class="badge">{{$level->name}}</span>
+										@endforeach
+								@endif
+
+								<a href="{{ URL::to('listing/'.$listing->id.'/'.$listing->slug) }}" title="{{ $listing->title }}"><button class="btn btn-sm btn-blue pull-right">Ver Colegio <i class="fa fa-chevron-right fa-fw"></i></button></a>
 
 							</div>
 						</div>

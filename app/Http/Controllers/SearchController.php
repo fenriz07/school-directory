@@ -15,6 +15,7 @@ class SearchController extends Controller
 
     public function getSearch(Request $request)
     {
+
         $main_categories = Category::where('parent_id', null)->get();
 
         $listing = new Listing;

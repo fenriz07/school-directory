@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(NewsSeeder::class);
         $this->call(ListingSeeder::class);
+        $this->call(LevelsTableSeeder::class);
 
         Model::reguard();
     }
