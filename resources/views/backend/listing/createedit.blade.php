@@ -70,7 +70,32 @@
 	        </div>
 
 
-	    </div>
+		</div>
+
+		<div class="row data-block">
+
+			<div class="col-sm-3">
+				<label for="categories" class="control-label">Levels</label>
+			</div>
+			<div class="col-sm-9 form-group">
+
+			<select class="form-control selectpicker" name="levels[]" multiple>
+				@foreach($levels as $level)
+				
+					@if( (isset($selected_levels) && in_array($level->id, $selected_levels)) )
+						<option value="{{$level->id}}" selected>{{$level->name}}</option>
+					@else
+						<option value="{{$level->id}}">{{$level->name}}</option>
+					@endif
+				
+				@endforeach
+			</select>
+
+			</div>
+
+
+		</div>
+		
 
 	    <div class="row">
 

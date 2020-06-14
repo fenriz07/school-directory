@@ -6,9 +6,9 @@
 
 <div id="searchbar">
   <div class="row">
-    <div class="col-md-3 form-group"><input type="text" class="form-control" name="keyword" placeholder="Keyword" title="Keyword" value="{{ Request::get('keyword') }}"></div>
+    <div class="col-md-3 form-group"><input type="text" class="form-control" name="keyword" placeholder="Buscar colegio" title="Buscar colegio" value="{{ Request::get('keyword') }}"></div>
     <div class="col-md-2 form-group">
-      <select class="form-control selectpicker" name="categories[]" title="Category" multiple>
+      <select class="form-control selectpicker" name="categories[]" title="Características" multiple>
         @foreach($main_categories as $cat)
         <optgroup label="{{$cat->name}}">
           @foreach($cat->children as $child)
@@ -26,7 +26,7 @@
         <input name="lat" type="hidden" value="{{ Request::get('lat') }}">
         <input name="lng" type="hidden" value="{{ Request::get('lng') }}">
         <input name="formatted_address" type="hidden" value="{{ Request::get('formatted_address') }}">
-        <input id="placesearch" name="address" type="text" class="form-control" placeholder="City/ Suburb" title="City or Suburb" autocomplete="off" value="{{ Request::get('address') }}">
+        <input id="placesearch" name="address" type="text" class="form-control" placeholder="Ciudad" title="Ciudad" autocomplete="off" value="{{ Request::get('address') }}">
     </div>
     <div class="col-md-2 form-group">
       <select class="form-control selectpicker" name="radius" data-mobile="true" title="Radius">
@@ -41,7 +41,7 @@
 
     </div>
     <div class="col-md-2 form-group">
-      <button type="submit" id="btn-search" class="form-control btn btn-purple" title="Submit Search" data-loading-text="<i class='fa fa-spinner'></i> Search">Search</button>
+      <button type="submit" id="btn-search" class="form-control btn btn-purple" title="Submit Search" data-loading-text="<i class='fa fa-spinner'></i> Search">Buscar</button>
     </div>
   </div>
 </div>

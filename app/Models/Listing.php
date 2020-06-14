@@ -18,6 +18,11 @@ class Listing extends Model
         return $this->belongsToMany('App\Models\Category', 'listing_categories', 'listing_id', 'category_id');
     }
 
+    public function levels()
+    {
+        return $this->belongsToMany('App\Models\Level', 'listing_levels', 'listing_id', 'level_id');
+    }
+
     public function openingtimes()
     {
         return $this->hasMany('App\Models\OpeningTime');

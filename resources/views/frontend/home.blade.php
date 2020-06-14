@@ -20,7 +20,7 @@
 
   <div class="row">
 
-    <div class="col-md-9" style="">
+    <div class="col-md-12" style="">
 
       <div class="row">
 
@@ -49,43 +49,6 @@
 
 
     </div>
-
-    <div class="col-md-3 hidden-sm hidden-xs " style="padding-top:30px;">
-
-        <div class="widget">
-          <h2><i class="fa fa-newspaper-o"></i> News</h2>
-          @foreach($news as $post)
-          <a href="{{ URL::to('news/'.$post->id.'/'.$post->slug) }}" title="{{ $post->title }}"><h3>{{ $post->title }}</h3></a>
-          <p>{{ str_limit(strip_tags($post->content), 60) }}</p>
-
-          @endforeach
-        </div>
-
-        <div class="widget" style="border: 3px solid #c1b2cd;">
-          <h2>Newsletter</h2>
-          <p>Subscribe to our Newsletter and stay tuned.</p>
-          
-          <form action="{{ URL::to('subscribe-newsletter') }}" method="post">
-            {!! csrf_field() !!}
-              <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>
-                  <input name="email" type="text" class="form-control" placeholder="your@email.com" aria-describedby="basic-addon1">
-                </div>
-              </div>
-              <input type="submit" value="Subscribe Now" class="btn btn-blue btn-large" />
-          </form>
-        </div>  
-
-        <div class="widget sticky">
-          <a href="http://www.ehealthbusiness.com.au" target="_blank"><img class="img-responsive" src="{{URL::to('img/bannerad.png')}}" alt="advertise" title="Advertise with us"/></a>
-
-        </div>  
-
-
-    </div>
-
-
 
   </div>
 
