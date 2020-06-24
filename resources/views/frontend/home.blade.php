@@ -77,7 +77,7 @@ function initHomeMap() {
   var infoWindowContent = {!! json_encode($infoWindowContent) !!};
 
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -37.814107, lng: 144.963280},
+    center: {lat: 22.1506876, lng: -100.9782947},
     zoom: 11,
     scrollwheel: false,
   });
