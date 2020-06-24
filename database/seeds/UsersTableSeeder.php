@@ -18,14 +18,5 @@ class UsersTableSeeder extends Seeder
             'email' => 'javier@impactum.mx',
             'password' => bcrypt('adminadmin'),
         ]);
-
-        DB::table('users')->insert([
-            'first_name' => 'Servio',
-            'last_name' => 'Zambrano',
-            'email' => 'servio.za@gmail.com',
-            'password' => bcrypt('admin'),
-        ]);
-
-
     }
 }

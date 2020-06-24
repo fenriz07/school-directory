@@ -18,6 +18,10 @@
 
     @yield('styles')
 
+    <!-- Start of HubSpot Embed Code -->
+      <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/7969157.js"></script>
+    <!-- End of HubSpot Embed Code -->
+
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -103,12 +107,12 @@
 
     <footer id="footer">
       <div class="footer-inner container">
-          <div class="pull-left">© Business Directory 2017 
+          <div class="pull-left">© Tu Colegio Ideal 2020 
             <span class="footer-nav">
-              <span class="item"><a href="{{ URL::to('privacy-policy') }}">Privacy Policy</a></span>
-              <span class="item"><a href="{{ URL::to('terms-conditions') }}">Terms and Conditions</a></span>
-              <span class="item"><a href="{{ URL::to('faq') }}">FAQ</a></span>
-              <span class="item"><a href="{{ URL::to('contact') }}">Contact</a></span>
+              <span class="item"><a target="_blank" href="http://blog.tucolegioideal.com/aviso-de-privacidad/">Aviso de privacidad</a></span>
+              <span class="item"><a target="_blank" href="http://blog.tucolegioideal.com/terminos-y-condiciones/">Terminos y condiciones</a></span>
+              <span class="item"><a target="_blank" href="http://blog.tucolegioideal.com/faq/">Preguntas Frecuentes</a></span>
+              <span class="item"><a href="{{ URL::to('contact') }}">Contacto</a></span>
             </span>
 
 
