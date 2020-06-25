@@ -112,7 +112,7 @@
               <span class="item"><a target="_blank" href="http://blog.tucolegioideal.com/aviso-de-privacidad/">Aviso de privacidad</a></span>
               <span class="item"><a target="_blank" href="http://blog.tucolegioideal.com/terminos-y-condiciones/">Terminos y condiciones</a></span>
               <span class="item"><a target="_blank" href="http://blog.tucolegioideal.com/faq/">Preguntas Frecuentes</a></span>
-              <span class="item"><a href="{{ URL::to('contact') }}">Contacto</a></span>
+              <span class="item"><a target="_blank" href="http://blog.tucolegioideal.com/contacto/">Contacto</a></span>
             </span>
 
 
