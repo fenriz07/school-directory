@@ -80,13 +80,29 @@
 
 						@if($listing->phone)
 						<tr>
-							<td><i class="fa fa-phone fa-fw"></i></td><td><span class="phone-content">{{ substr($listing->phone, 0, -5)."*****"}}</span> <span class="show-phone-link show-link" onclick="showPhone()"> Ver</span></td>
+							<td>
+								<i class="fa fa-phone fa-fw"></i>
+							</td><td>
+							
+							<a href="tel:{{ $listing->phone}}">
+							<span class="phone-content">
+								
+								{{ $listing->phone}}
+							</span>
+							</a>
 						</tr>
 						@endif
 
 						@if($listing->phone_afterhours)
 						<tr>
-							<td><i class="fa fa-phone fa-fw"></i></td><td><span class="phone-after-content">{{ substr($listing->phone_afterhours, 0, -5)."*****"}}</span> <span class="small">(Fuera de horario)</span> <span class="show-phone-after-link show-link" onclick="showPhoneAfter()">Ver</span></td>
+							<td><i class="fa fa-phone fa-fw"></i></td><td>
+								<a href="tel:{{ $listing->phone_afterhours}}">
+
+								<span class="phone-after-content">
+									{{ $listing->phone_afterhours}}
+								</span>
+								</a>
+								<span class="small">(Fuera de horario)</span> </td>
 						</tr>
 						@endif
 
@@ -123,6 +139,10 @@
 					</table>
 
 					<div class="social-icons pull-right">
+
+						@if($listing->phone)
+						<a href="https://wa.me/{{$listing->phone}}?texto=Vi%20un%20anuncio%20en%20la%20página%20de%20tucolegioideal.com%20y%20me%20gustaría%20solicitar%20informes%20de%20su%20colegio" rel="nofollow"><img src="{{URL::to('img/icons/ws.png')}}" alt="whatsapp"></a>
+						@endif
 						@if($listing->facebook)
 						<a href="{{ $listing->facebook }}" rel="nofollow"><img src="{{URL::to('img/icons/32-facebook.png')}}" alt="facebook"></a>
 						@endif
@@ -131,9 +151,22 @@
 						@endif
 					</div>
 
+					
+
 					<div class="clearfix"></div>
 
 				</div>	
+
+				<div class="widget">
+					<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/shell.js"></script>
+<script>
+  hbspt.forms.create({
+    portalId: "7969157",
+    formId: "b1734e51-37aa-4306-910f-049e1a8e8873"
+});
+</script>
+
+				</div>
 		
 
 			</div>
