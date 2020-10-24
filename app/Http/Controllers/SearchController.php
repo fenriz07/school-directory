@@ -21,6 +21,7 @@ class SearchController extends Controller
         $listing = new Listing;
         $listing = $listing->where("approved", "=", true);
 
+
         if (!empty($request->keyword)) {
             $listing = $listing->where(function ($query) use ($request) {
                 $query->where('title', 'LIKE', '%'. $request->keyword .'%')
@@ -28,11 +29,15 @@ class SearchController extends Controller
             });
         }
 
+
+
         if (!empty($request->categories)) {
             $listing = $listing->whereHas('categories', function ($query) use ($request) {
                 $query->whereIn('id', $request->categories);
             });
         }
+
+
 
         if (!empty($request->lat) && !empty($request->lng)) {
             $lat = $request->lat;
