@@ -58,7 +58,26 @@
 					<p>{{$listing->service_area}}</p>
 
 				</div>
-				@endif
+				@endif	
+
+				@if($listing->gallery !== null)
+					<div class="widget">
+						<h2>Galería</h2>
+
+						@for ($i = 1; $i < 6; $i++)
+							@if( $listing->gallery->{'image_' . $i } !== null )
+
+								<a href="{{ URL::to('files/'. $listing->gallery->{'image_' . $i }) }}" data-lightbox="roadtrip">
+									<img width="100px" height="100px" src="{{ URL::to('files/'. $listing->gallery->{'image_' . $i }) }}" alt="">
+								</a>
+
+							@endif
+						@endfor
+
+
+
+					</div>	
+				@endif	
 
 
 			</div>

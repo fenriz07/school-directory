@@ -226,7 +226,14 @@
 		        	<input type="text" class="form-control" id="facebook" name="facebook" value="{{ (Request::old('facebook')) ? Request::old('facebook') : $listing->facebook }}" placeholder="http://www.facebook.com/tu-colegio-ideal">
 		        </div>
 
-		    </div>
+			</div>
+			
+			<div class="row data-block">
+				<div class="col-sm-3">
+					<label class="control-label">Galeria</label>
+					<input type="file" name="gallery[]" multiple accept="image/png, image/jpeg">
+				</div>
+			</div>
 
 
 		    <div class="data-block">

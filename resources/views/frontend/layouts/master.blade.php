@@ -22,6 +22,7 @@
     {!! HTML::style('css/bootstrap-select.min.css') !!}
     {!! HTML::style('css/font-awesome.min.css') !!}
     {!! HTML::style('css/style.css') !!}
+    {!! HTML::style('css/lightbox.css') !!}
 
     @yield('styles')
 
@@ -138,6 +139,8 @@
     {!! HTML::script('js/jquery-1.11.3.min.js') !!}
     {!! HTML::script('js/bootstrap.min.js') !!}
     {!! HTML::script('js/bootstrap-select.min.js') !!}
+    {!! HTML::script('js/lightbox.js') !!}
+
     
 
     <script>

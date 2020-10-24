@@ -27,4 +27,9 @@ class Listing extends Model
     {
         return $this->hasMany('App\Models\OpeningTime');
     }
+
+    public function gallery()
+    {
+        return $this->hasOne('App\Gallery', 'listing_id');
+    }
 }

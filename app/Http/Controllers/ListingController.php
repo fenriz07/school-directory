@@ -1,5 +1,8 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
+
+use App\Gallery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Listing;
@@ -22,8 +25,8 @@ class ListingController extends Controller
         $listing = new Listing();
         $main_categories = Category::where('parent_id', null)->get();
         $levels = Level::all();
-    
-        return view('frontend/listing/createedit', ['main_categories' => $main_categories, 'listing' => $listing,'levels' => $levels ]);
+
+        return view('frontend/listing/createedit', ['main_categories' => $main_categories, 'listing' => $listing, 'levels' => $levels]);
     }
 
     public function getEdit($listingid)
@@ -59,11 +62,12 @@ class ListingController extends Controller
         $selected_levels = $listing->levels()->select('levels.id AS id')->lists('id')->all();
 
 
-        return view('frontend/listing/createedit', ['selected_levels' => $selected_levels,'levels' => $levels, 'listing' => $listing, 'main_categories' => $main_categories, 'selected_categories' => $selected_categories, 'openingtimes' => $openingtimes]);
+        return view('frontend/listing/createedit', ['selected_levels' => $selected_levels, 'levels' => $levels, 'listing' => $listing, 'main_categories' => $main_categories, 'selected_categories' => $selected_categories, 'openingtimes' => $openingtimes]);
     }
 
     public function postCreateEdit(Request $request)
     {
+
 
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:50',
@@ -116,7 +120,7 @@ class ListingController extends Controller
             $image = $request->file('logo');
             $filename  = str_random(16) . '.' . $image->getClientOriginalExtension();
 
-            $path = public_path('img/listing/logo/'.$filename);
+            $path = public_path('img/listing/logo/' . $filename);
 
             $img = Image::make($image->getRealPath())->resize(300, 300, function ($constraint) {
                 $constraint->aspectRatio();
@@ -126,6 +130,8 @@ class ListingController extends Controller
 
             $listing->logo = $filename;
         }
+
+
 
 
         if ($listing->save()) {
@@ -181,7 +187,41 @@ class ListingController extends Controller
         } else {
             flash()->error('Error occured while saving listing.');
         }
-        
+
+        if ($request->hasFile('gallery')) {
+
+            if ($listing->gallery === null) {
+
+                $gallery = Gallery::create([
+                    'listing_id' =>  $listing->id
+                ]);
+            } else {
+
+                $gallery = $listing->gallery;
+            }
+
+
+            $data = [];
+            $loop = 1;
+
+            foreach ($request->file('gallery') as $file) {
+                sleep(1);
+
+                $name = time() . '.' . $file->extension();
+                $file->move(public_path() . '/files/', $name);
+
+                $gallery->{"image_" . $loop} = $name;
+
+                $loop++;
+
+                if ($loop == 6) {
+                    break;
+                }
+            }
+
+            $gallery->save();
+        }
+
 
         return redirect('my-listings');
     }
@@ -204,7 +244,7 @@ class ListingController extends Controller
         }
 
         if ($slug != $listing->slug) {
-            return redirect('listing/'.$listing->id.'/'.$listing->slug, 301);
+            return redirect('listing/' . $listing->id . '/' . $listing->slug, 301);
         }
 
         if ($listing->approved == false && !Entrust::hasRole('admin')) {
@@ -229,7 +269,8 @@ class ListingController extends Controller
 
         return view(
             'frontend/listing/view',
-            ['listing' => $listing,
+            [
+                'listing' => $listing,
                 'openingtimes' => $openingtimes,
                 'phone_encoded' => $phone_encoded,
                 'phone_after_encoded' => $phone_after_encoded,
@@ -291,10 +332,10 @@ class ListingController extends Controller
     public function strToHex($string)
     {
         $hex = '';
-        for ($i=0; $i<strlen($string); $i++) {
+        for ($i = 0; $i < strlen($string); $i++) {
             $ord = ord($string[$i]);
             $hexCode = dechex($ord);
-            $hex .= substr('0'.$hexCode, -2);
+            $hex .= substr('0' . $hexCode, -2);
         }
         return strToUpper($hex);
     }
